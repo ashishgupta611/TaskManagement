@@ -4,7 +4,7 @@ import storage from 'redux-persist/lib/storage';
 import taskReducer from '../reducers/tasksSlice';
 
 const rootReducer = combineReducers({
-    task: taskReducer
+    tasks: taskReducer
 });
 
 export type ReducerState = ReturnType<typeof rootReducer>;

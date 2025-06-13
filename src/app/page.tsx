@@ -1,60 +1,81 @@
 //Implement home page for TaskManager application
 'use client';
 
-import { useState } from 'react';
-import { useAppDispatch } from '../hooks';
-import Image from 'next/image';
-import bgImage from '../resources/images/bg_home.png';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import './globals.css';
-import { InputChangeHandler } from '../types';
-import LabelWithInput from '../components/LabelWithInput';
-import { addTask } from '../reducers/tasksSlice';
+import { useAPI, useNetworkAPI } from '../hooks';
+import { TaskItem } from '../interfaces';
+import { API } from '../constants';
+import Main from '../components/main-item';
+import ListItems from '../components/list-items';
+import SearchComponent from '../components/search-component';
+import { removeTask } from '../reducers/tasksSlice';
+import { useAppDispatch } from '../hooks';
+//import { useFilteredTask } from '../hooks';
 
 export default function Home() {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
   const dispatch = useAppDispatch();
+  const url = `${API.URL.BASE}${API.PATH.ADD_TASK}`;
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [filteredTasks, setFilteredTasks] = useState<TaskItem[]>([]);
 
+  // const filteredTasks = useFilteredTask();
 
-  const handleNameChange = (e: InputChangeHandler) => {
-    setName(e.target.value);
+  //const { data, loading, error } = useAPI<TaskItem[]>({ url, initialData: [] });
+  const { data, loading, error } = useNetworkAPI<TaskItem[]>({ url});
+  
+  useEffect(()=> {
+    handleSearch();
+  }, [data, searchQuery]);
+
+  const handleSearch = () => {
+    console.log("Search tapped for:", searchQuery);
+    const filtered = data?.filter((item => item.name.toLowerCase().includes(searchQuery.toLowerCase()) || item.description.toLowerCase().includes(searchQuery.toLowerCase())));
+    if (filtered) setFilteredTasks(filtered);
   };
 
-  const handleDescriptionChange = (e: InputChangeHandler) => {
-    setDescription(e.target.value);
+  const deleteTask = (task: TaskItem) => {
+    dispatch(removeTask(task.id));
   };
 
-  const handleAddClick = () => {
-    console.log('Button click');
-    dispatch(addTask({
-      name: name,
-      description: description,
-      creationTime: Date.now()
-    }));
-  };
+  const renderItem = ({ item }: { item: TaskItem }) => (
+    <div className="bg-cyan-50 rounded-lg shadow-md overflow-hidden hover:shadow-lg backdrop-blur-md bg-white/30">
+      <div className="p-4 pt-2">
+        <h3 className="text-lg font-semibold text-white">{item.name}</h3>
+        <p className="text-white mb-5 mt-1">{item.description}</p>
+        <Link href={`/detail/${item.id}`} className='bg-clear font-semibold shadow-md border border-blue-300 text-blue-300 py-2 px-4 rounded hover:bg-gray-400'>DETAILS</Link>
+        <Link href={`/edit/${item.id}`} className='ml-5 font-semibold bg-clear shadow-md border border-orange-200 text-orange-200 py-2 px-5 rounded hover:bg-gray-400'>EDIT</Link>
+        <button className='ml-5 bg-clear font-semibold shadow-md border border-red-300 text-red-300 py-2 px-5 rounded hover:bg-gray-400' onClick={() => {deleteTask(item)}}>DELETE</button>
+      </div>
+    </div>
+  );
 
   return (
-    <main className="flex justify-center bg-gray-600">
-      <Image
-        src={bgImage}
-        alt="Task Manager"
-        className="blur-xl"
-      />
-      <div className='flex absolute flex-col'>
-        <div className="flex-col justify-center border border-red-300 rounded-lg bg-clear shadow-lg p-8 px-40 mt-5">
-          <h1 className="text-4xl font-bold mb-2 text-red-300">Welcome to TaskManager</h1>
-          <p className="text-lg text-center text-blue-300 justify-center">Your personal task management application.</p>
-        </div>
-        <div className='flex-col justify-center border border-blue-300 rounded-lg bg-clear shadow-lg p-8 px-40 mt-5'>
-          <div className="flex flex-col border rounded-lg border-blue-300 justify-center bg-clear shadow-lg py-5 px-5">
-          <label className="block text-center text-2xl text-white font-bold">Create New Task</label>
-          <LabelWithInput label='Name' placeholder="Enter task name" type='text' value={name} onChange={handleNameChange} />
-          <LabelWithInput label='Description' type='textarea' placeholder="Enter task description" value={description} onChange={handleDescriptionChange} />
-        </div>
-        <button className="bg-clear border border-green-300 mt-10 w-full font-bold text-green-300 px-4 py-2 rounded" onClick={handleAddClick}>ADD</button>
-        </div>
+    <Main href='/create' hrefName='CREATE NEW'>
+      <div className='p-4 border border-gray-200 rounded-lg shadow-sm mt-5 h-[600px]'>
+       <div className='flex'>
+         <p className="text-white text-center text-1.5xl font-semibold mt-1 ml-3">Showing {filteredTasks.length} tasks.</p>
+        <SearchComponent searchQuery={searchQuery} onTextChange={setSearchQuery} onSearch={handleSearch} />
+       </div>
+        {loading &&
+          <label className="block text-center text-2xl text-white font-bold">Loading ...</label>
+        }
+        {error as (string | null) &&
+          <label className="block text-center text-2xl text-white font-bold">Something went wrong. Please refresh the page.</label>
+        }
+        {/* {(!loading && filteredTasks.length === 0) &&
+          <label className="block text-center text-2xl text-white font-bold">No task details found.</label>
+        } */}
+        {!loading && <ListItems
+          data={filteredTasks}
+          containerHeight='h-[500px]'
+          renderItem={renderItem}
+          numColumns={2}
+          onEndReached={() => console.log('Load more products...')}
+          className="mt-6"
+        />}
       </div>
-    </main>
+    </Main>
   );
 }
