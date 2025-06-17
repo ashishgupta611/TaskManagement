@@ -1,45 +1,47 @@
 //Implement home page for TaskManager application
 'use client';
 
-import { useState } from 'react';
-import { useAppDispatch } from '@/src/hooks';
+import { useEffect, useState } from 'react';
+import { useAppSelector } from '@/src/hooks';
 import React from 'react';
 import '../../globals.css';
-import { InputChangeHandler } from '@/src/types';
 import LabelWithInput from '@/src/components/label-with-input';
-import { addTask } from '@/src/reducers/tasksSlice';
+import { TaskItem } from '@/src/interfaces';
+import { RootState } from '@/src/store';
+import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function TaskDetail() {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const pathname = usePathname();
+  const [task, setTask] = useState<TaskItem>();
+  const { tasks } = useAppSelector((state: RootState) => state.rootReducer.tasks);
 
+  useEffect(() => {
+    if (!!pathname && tasks) {
+      const taskID = pathname.split('/').filter(Boolean).pop();
+      const taskItem = tasks.find((item) => item.id === taskID);
 
-  const handleNameChange = (e: InputChangeHandler) => {
-    setName(e.target.value);
+      if (taskItem) {
+        setTask(taskItem);
+      }
+    }
+  }, [tasks]);
+
+  const handleBack = async () => {
+    router.push('/');
+    //console.log('Button click');
   };
 
-  const handleDescriptionChange = (e: InputChangeHandler) => {
-    setDescription(e.target.value);
-  };
-
-  const handleAddClick = () => {
-    console.log('Button click');
-    dispatch(addTask({
-      name: name,
-      description: description,
-      creationTime: Date.now()
-    }));
-  };
 
   return (
     <div className='flex-col justify-center border border-blue-300 rounded-lg bg-clear shadow-lg p-8 px-40 mt-5'>
       <div className="flex flex-col border rounded-lg border-blue-300 justify-center bg-clear shadow-lg py-5 px-5">
-        <label className="block text-center text-2xl text-white font-bold">Edit Task</label>
-        <LabelWithInput label='Name' placeholder="Enter task name" type='text' value={name} onChange={handleNameChange} />
-        <LabelWithInput label='Description' type='textarea' placeholder="Enter task description" value={description} onChange={handleDescriptionChange} />
+        <label className="block text-center text-2xl text-white font-bold">DETAILS</label>
+        <LabelWithInput label='Name' placeholder="Enter task name" type='text' value={task?.name || ''} readOnly={true} disabled={true} />
+        <LabelWithInput label='Description' type='textarea' placeholder="Enter task description" value={task?.description || ''} readOnly={true} disabled={true} />
       </div>
-      <button className="bg-clear border border-green-300 mt-10 w-full font-bold text-green-300 px-4 py-2 rounded" onClick={handleAddClick}>UPDATE</button>
+      <button className="bg-clear border border-green-300 mt-10 w-full font-bold text-green-300 px-4 py-2 rounded" onClick={handleBack}>BACK</button>
     </div>
   );
 }

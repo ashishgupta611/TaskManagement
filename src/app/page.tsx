@@ -14,7 +14,7 @@ import SearchComponent from '../components/search-component';
 import { loadTasks } from '../reducers/tasksSlice';
 import { useAppDispatch } from '../hooks';
 import { RootState } from '../store';
-import { deleteTaskItem } from '../helpers/api-helpers';
+import { deleteTaskItem } from '../services/task-service'; 
 //import { useFilteredTask } from '../hooks';
 
 export default function Home() {

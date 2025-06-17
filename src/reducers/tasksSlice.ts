@@ -32,9 +32,7 @@ export const taskSlice = createSlice({
 
     // Update a task (full replacement)
     updateTask: (state, action: PayloadAction<TaskItem>) => {
-      const index = state.tasks.findIndex(
-        (task) => task.id === action.payload.id
-      );
+      const index = state.tasks.findIndex((task) => task.id === action.payload.id);
       if (index !== -1) {
         state.tasks[index] = action.payload; // Direct assignment (Immer-safe)
       }

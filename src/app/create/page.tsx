@@ -7,7 +7,7 @@ import React from 'react';
 import '../globals.css';
 import { InputChangeHandler } from '@/src/types';
 import LabelWithInput from '@/src/components/label-with-input';
-import { addTaskItem } from '@/src/helpers/api-helpers';
+import { addTaskItem } from '@/src/services/task-service';
 import { TaskItem } from '@/src/interfaces';
 
 

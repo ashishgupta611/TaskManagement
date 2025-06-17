@@ -14,7 +14,7 @@ const isClient = typeof window !== 'undefined';
 const persistConfig: PersistConfig<ReducerState> = {
     key: 'root',
     storage: isClient ? storage : require('redux-persist/lib/storage/session').default,
-    whitelist: ['task'] 
+    whitelist: ['tasks'] 
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

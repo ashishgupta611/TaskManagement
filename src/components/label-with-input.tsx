@@ -3,6 +3,8 @@
 import { InputChangeHandler } from "../types";
 
 interface LabelWithInputProps {
+    readOnly?: boolean | undefined;
+    disabled?: boolean | undefined;
     label: string;
     placeholder: string;
     value: string;
