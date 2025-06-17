@@ -16,6 +16,7 @@ import { useAppDispatch } from '../hooks';
 import { RootState } from '../store';
 import { deleteTaskItem } from '../services/task-service'; 
 //import { useFilteredTask } from '../hooks';
+import { startLoading, stopLoading } from '../reducers/loadingSlice';
 
 export default function Home() {
   const { tasks } = useAppSelector((state: RootState) => state.rootReducer.tasks);
@@ -50,7 +51,9 @@ export default function Home() {
   };
 
   const deleteTask = async (task: TaskItem) => {
+    dispatch(startLoading({ loadingText: 'Ram wow' }));
     if (await deleteTaskItem(task.id, dispatch)) {
+      dispatch(stopLoading());
       //console.error('Task deleted successfully.');
     }
   };

@@ -62,9 +62,7 @@ export const createHttpClient = ({
   return client;
 };
 
-export const makeRequest = async <T>(
-  options: APIServiceOptions<T>
-): Promise<{ res: AxiosResponse<T> | null; err: AxiosError<T> | null }> => {
+export const makeRequest = async <T>(options: APIServiceOptions<T>): Promise<{ res: AxiosResponse<T> | null; err: AxiosError<T> | null }> => {
   const { url, method = "get", data, params } = options;
   try {
     const client = createHttpClient({ baseURL: url });

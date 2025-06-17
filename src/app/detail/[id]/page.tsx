@@ -8,8 +8,7 @@ import '../../globals.css';
 import LabelWithInput from '@/src/components/label-with-input';
 import { TaskItem } from '@/src/interfaces';
 import { RootState } from '@/src/store';
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function TaskDetail() {
   const router = useRouter();
@@ -30,7 +29,6 @@ export default function TaskDetail() {
 
   const handleBack = async () => {
     router.push('/');
-    //console.log('Button click');
   };
 
 
