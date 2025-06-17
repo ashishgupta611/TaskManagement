@@ -3,6 +3,6 @@ export interface TaskItem {
     name: string;
     description: string;
     creationTime: number;
-    completionTime?: number;
+    completionTime?: number | null | undefined;
     completed?: boolean;
 };

@@ -1,17 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { createHttpClient } from "../services";
-
-type HttpMethod = "get" | "post" | "put" | "patch" | "delete";
-
-interface APIServiceOptions<T> {
-  url: string;
-  method?: HttpMethod;
-  data?: unknown;
-  params?: Record<string, unknown>;
-  immediate?: boolean;
-  onSuccess?: (data: T) => void;
-  onError?: (error: unknown) => void;
-}
+import { APIServiceOptions } from "../interfaces";
 
 export function useAPIService<T = unknown>() {
   const [data, setData] = useState<T | null>(null);
@@ -19,26 +8,14 @@ export function useAPIService<T = unknown>() {
   const [loading, setLoading] = useState(false);
 
   const makeRequest = async (options: APIServiceOptions<T>) => {
-    const {
-      url,
-      method = "get",
-      data,
-      params,
-      onSuccess,
-      onError,
-    } = options;
+    const { url, method = "get", data, params, onSuccess, onError } = options;
 
     setLoading(true);
     setError(null);
 
     try {
       const client = createHttpClient({baseURL: url});
-      const response = await client.request<T>({
-        baseURL: url,
-        method,
-        data,
-        params,
-      });
+      const response = await client.request<T>({ baseURL: url, data, params, method: method });
 
       setData(response.data);
       if (onSuccess) onSuccess(response.data);

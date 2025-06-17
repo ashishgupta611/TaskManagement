@@ -1,6 +1,4 @@
 import { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
-
-
 export interface ApiError<T> extends AxiosError<T> {
   error?: string
 };

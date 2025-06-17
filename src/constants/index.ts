@@ -1,14 +1,4 @@
-// APIs
-export const API = {
-    URL: {
-      BASE: 'https://6849b73d45f4c0f5ee729ac4.mockapi.io',
-    },
-    PATH: {
-      ADD_TASK: '/api/v1/add',
-    },
-  } as const;
-  
-  // Regex
+ // Regex
   export const REGEX = {
     EMAIL: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, // Basic email validation
     PASSWORD: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, // Password validation

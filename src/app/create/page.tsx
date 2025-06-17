@@ -7,7 +7,9 @@ import React from 'react';
 import '../globals.css';
 import { InputChangeHandler } from '@/src/types';
 import LabelWithInput from '@/src/components/label-with-input';
-import { addTask } from '@/src/reducers/tasksSlice';
+import { addTaskItem } from '@/src/helpers/api-helpers';
+import { TaskItem } from '@/src/interfaces';
+
 
 export default function Home() {
   const [name, setName] = useState('');
@@ -23,13 +25,17 @@ export default function Home() {
     setDescription(e.target.value);
   };
 
-  const handleAddClick = () => {
-    console.log('Button click');
-    dispatch(addTask({
+  const handleAddClick = async () => {
+    const task: Omit<TaskItem, 'id'> = {
       name: name,
       description: description,
-      creationTime: Date.now()
-    }));
+      creationTime: Date.now(),
+      completionTime: null
+    };
+    if (await addTaskItem(task, dispatch)) {
+      setName('');
+      setDescription('');
+    }
   };
 
   return (
