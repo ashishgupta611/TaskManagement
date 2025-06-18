@@ -13,7 +13,7 @@ const Toast: React.FC = () => {
       if (messages.length > 0) {
         dispatch(removeMessage(messages[0].id));
       }
-    }, 5000);
+    }, 2000);
 
     return () => clearInterval(timer);
   }, [messages, dispatch]);

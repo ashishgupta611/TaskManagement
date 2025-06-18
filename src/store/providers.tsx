@@ -6,6 +6,7 @@ import { store, persistor } from '../store';
 import { PersistGate } from 'redux-persist/integration/react';
 import Toast from '../components/toast';
 import LoadingOverlay from '../components/loadingOverlay';
+import ConfirmationDialog from '../components/confirmationDialog';
 
 const ReduxProvider = ({ children }: Readonly<{ children: ReactNode }>) => {
 
@@ -15,6 +16,7 @@ const ReduxProvider = ({ children }: Readonly<{ children: ReactNode }>) => {
                 {children}
                 <Toast />
                 <LoadingOverlay />
+                <ConfirmationDialog />
             </PersistGate>
         </Provider>
     );

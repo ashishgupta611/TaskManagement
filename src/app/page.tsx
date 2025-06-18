@@ -14,6 +14,7 @@ import { loadTasks } from '../reducers/tasksSlice';
 import { RootState } from '../store';
 import { deleteTaskItem } from '../services/task-service'; 
 //import { useFilteredTask } from '../hooks';
+import { confirm } from '../utils/confirm';
 
 export default function Home() {
   const { tasks } = useAppSelector((state: RootState) => state.rootReducer.tasks);
@@ -47,6 +48,17 @@ export default function Home() {
     if (filtered) setFilteredTasks(filtered);
   };
 
+  const handleDeleteTask = (task: TaskItem) => {
+    confirm(dispatch, {
+      title: 'Delete Task',
+      message: `Are you sure you want to delete "${task.name}"? This action cannot be undone.`,
+      confirmText: 'Delete',
+      onConfirm: async () => {
+        await deleteTask(task);
+      },
+    });
+  };
+
   const deleteTask = async (task: TaskItem) => {
     if (await deleteTaskItem(task.id, dispatch)) {
       //console.error('Task deleted successfully.');
@@ -60,7 +72,7 @@ export default function Home() {
         <p className="text-white mb-5 mt-1">{item.description}</p>
         <Link href={`/detail/${item.id}`} className='bg-clear font-semibold shadow-md border border-blue-300 text-blue-300 py-2 px-4 rounded hover:bg-gray-400'>DETAILS</Link>
         <Link href={`/edit/${item.id}`} className='ml-5 font-semibold bg-clear shadow-md border border-orange-200 text-orange-200 py-2 px-5 rounded hover:bg-gray-400'>EDIT</Link>
-        <button className='ml-5 bg-clear font-semibold shadow-md border border-red-300 text-red-300 py-2 px-5 rounded hover:bg-gray-400' onClick={() => { deleteTask(item) }}>DELETE</button>
+        <button className='ml-5 bg-clear font-semibold shadow-md border border-red-300 text-red-300 py-2 px-5 rounded hover:bg-gray-400' onClick={() => { handleDeleteTask(item) }}>DELETE</button>
       </div>
     </div>
   );
