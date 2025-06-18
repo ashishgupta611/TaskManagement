@@ -2,21 +2,18 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import './globals.css';
-import { useAPI, useAppSelector, useNetworkAPI } from '../hooks';
+import { useAPI, useAppSelector, useNetworkAPI, useAppDispatch } from '../hooks';
 import { TaskItem } from '../interfaces';
 import { API, API_ENDPOINTS } from '../constants/endpoints';
 import Main from '../components/main-item';
 import ListItems from '../components/list-items';
 import SearchComponent from '../components/search-component';
 import { loadTasks } from '../reducers/tasksSlice';
-import { useAppDispatch } from '../hooks';
 import { RootState } from '../store';
 import { deleteTaskItem } from '../services/task-service'; 
 //import { useFilteredTask } from '../hooks';
-import { startLoading, stopLoading } from '../reducers/loadingSlice';
 
 export default function Home() {
   const { tasks } = useAppSelector((state: RootState) => state.rootReducer.tasks);
@@ -51,9 +48,7 @@ export default function Home() {
   };
 
   const deleteTask = async (task: TaskItem) => {
-    dispatch(startLoading({ loadingText: 'Ram wow' }));
     if (await deleteTaskItem(task.id, dispatch)) {
-      dispatch(stopLoading());
       //console.error('Task deleted successfully.');
     }
   };

@@ -4,6 +4,8 @@ import { AppDispatch } from "../store";
 import { makeRequest } from "../services";
 import { removeTask, addTask, updateTask } from "../reducers/tasksSlice";
 import { API, API_ENDPOINTS } from "../constants/endpoints";
+import { startLoading, stopLoading } from '../reducers/loadingSlice';
+import { addMessage } from "../reducers/messageSlice";
 
 // export const fetchProducts = createAsyncThunk(
 // "products/fetchProducts",
@@ -22,36 +24,44 @@ import { API, API_ENDPOINTS } from "../constants/endpoints";
 
 export const addTaskItem = async (task: Omit<TaskItem, 'id'>, dispatch: AppDispatch): Promise<Boolean> => {
   let success = false;
+  dispatch(startLoading({ loadingText: 'Adding ...' }));
   const options: APIServiceOptions<TaskItem> = { url:`${API.URL.BASE}${API_ENDPOINTS.TASK.ADD}`, method:"post", data:task};
   try {
     const response = await makeRequest(options);
     if (response) {
-      dispatch(addTask(task));
       success = true;
+      dispatch(addTask(task));
+      dispatch(addMessage({text: 'Task added successfully.', type: 'success'}));
     }
   } 
   catch (error) {
     console.error('Error deleting task:', error);
+    dispatch(addMessage({text: 'Something went wrong. Play try again.', type: 'error'}));
   }
   finally {
+    dispatch(stopLoading());
     return success;
   }
 };
 
 export const updateTaskItem = async (task: TaskItem, dispatch: AppDispatch): Promise<Boolean> => {
   let success = false;
+  dispatch(startLoading({ loadingText: 'Updating ...' }));
   const options: APIServiceOptions<{name: string, description: string}> = { url:`${API.URL.BASE}${API_ENDPOINTS.TASK.ADD}/${task.id}`, method:"put", data:{name: task.name, description:task.description}};
   try {
     const response = await makeRequest(options);
     if (response) {
-      dispatch(updateTask(task));
       success = true;
+      dispatch(updateTask(task));
+      dispatch(addMessage({text: 'Task updated successfully.', type: 'success'}));
     }
   } 
   catch (error) {
     console.error('Error in updating task:', error);
+    dispatch(addMessage({text: 'Something went wrong. Play try again.', type: 'error'}));
   }
   finally {
+    dispatch(stopLoading());
     return success;
   }
 };
@@ -59,18 +69,23 @@ export const updateTaskItem = async (task: TaskItem, dispatch: AppDispatch): Pro
 
 export const deleteTaskItem = async (taskId: string, dispatch: AppDispatch): Promise<Boolean> => {
   let success = false;
+  dispatch(startLoading({ loadingText: 'Deleting ...' }));
+
   const options: APIServiceOptions<any> = { url:`${API.URL.BASE}${API_ENDPOINTS.TASK.ADD}/${taskId}`, method:"delete" };
   try {
     const response = await makeRequest(options);
     if (response) {
-      dispatch(removeTask(taskId));
       success = true;
+      dispatch(removeTask(taskId));
+      dispatch(addMessage({text: 'Task deleted successfully.', type: 'success'}));
     }
   } 
   catch (error) {
     console.error('Error deleting task:', error);
+    dispatch(addMessage({text: 'Something went wrong. Play try again.', type: 'error'}));
   }
   finally {
+    dispatch(stopLoading());
     return success;
   }
 };
