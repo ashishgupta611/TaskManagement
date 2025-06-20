@@ -7,8 +7,8 @@ import axios, {
 } from "axios";
 import { AcceptType, ContentType, PolicyType, RequestHeader } from "../enums";
 import { API } from "../constants/endpoints";
-import { responseInterceptors } from "../interceptors/response-interceptor";
-import { handleRequestWithoutAuthHeaderInterception } from "../interceptors/request-interceptor";
+import { responseInterceptors } from "../interceptors/responseInterceptor";
+import { handleRequestWithoutAuthHeaderInterception } from "../interceptors/requestInterceptor";
 import { APIServiceOptions } from "../interfaces";
 
 axios.defaults.headers.common = {

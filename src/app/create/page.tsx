@@ -6,8 +6,8 @@ import { useAppDispatch } from '@/src/hooks';
 import React from 'react';
 import '../globals.css';
 import { InputChangeHandler } from '@/src/types';
-import LabelWithInput from '@/src/components/label-with-input';
-import { addTaskItem } from '@/src/services/task-service';
+import LabelWithInput from '@/src/components/labelWithInput';
+import { addTaskItem } from '@/src/services/taskService';
 import { TaskItem } from '@/src/interfaces';
 
 
@@ -27,10 +27,11 @@ export default function Home() {
 
   const handleAddClick = async () => {
     const task: Omit<TaskItem, 'id'> = {
-      name: name,
+      title: name,
       description: description,
-      creationTime: Date.now(),
-      completionTime: null
+      creationDate: new Date(),
+      priority: 'High',
+      status: 'Open',
     };
     if (await addTaskItem(task, dispatch)) {
       setName('');

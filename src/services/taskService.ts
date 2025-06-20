@@ -1,7 +1,7 @@
 //import { createAsyncThunk } from "@reduxjs/toolkit";
 import { APIServiceOptions, TaskItem } from "../interfaces";
 import { AppDispatch } from "../store";
-import { makeRequest } from "../services";
+import { makeRequest } from ".";
 import { removeTask, addTask, updateTask } from "../reducers/tasksSlice";
 import { API, API_ENDPOINTS } from "../constants/endpoints";
 import { startLoading, stopLoading } from '../reducers/loadingSlice';
@@ -47,7 +47,7 @@ export const addTaskItem = async (task: Omit<TaskItem, 'id'>, dispatch: AppDispa
 export const updateTaskItem = async (task: TaskItem, dispatch: AppDispatch): Promise<Boolean> => {
   let success = false;
   dispatch(startLoading({ loadingText: 'Updating ...' }));
-  const options: APIServiceOptions<{name: string, description: string}> = { url:`${API.URL.BASE}${API_ENDPOINTS.TASK.ADD}/${task.id}`, method:"put", data:{name: task.name, description:task.description}};
+  const options: APIServiceOptions<{name: string, description: string}> = { url:`${API.URL.BASE}${API_ENDPOINTS.TASK.ADD}/${task.id}`, method:"put", data:{name: task.title, description:task.description}};
   try {
     const response = await makeRequest(options);
     if (response) {

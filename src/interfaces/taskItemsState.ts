@@ -1,4 +1,4 @@
-import { TaskItem } from "./task-item";
+import { TaskItem } from "./taskItem";
 import { TaskFilter } from "../types";
 
 export interface TaskItemsState {

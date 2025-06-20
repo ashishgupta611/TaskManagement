@@ -6,8 +6,8 @@ import { RootState } from '@/src/store';
 import { useAppSelector, useAppDispatch } from '@/src/hooks';
 import '../../globals.css';
 import { InputChangeHandler } from '@/src/types';
-import LabelWithInput from '@/src/components/label-with-input';
-import { updateTaskItem } from '@/src/services/task-service';
+import LabelWithInput from '@/src/components/labelWithInput';
+import { updateTaskItem } from '@/src/services/taskService';
 import { usePathname } from 'next/navigation';
 import { TaskItem } from '@/src/interfaces';
 
@@ -45,7 +45,7 @@ export default function EditTask() {
 
   const handleAddClick = async () => {
     console.log('Button click');
-    if (task && task.name && task.description) {
+    if (task && task.title && task.description) {
       await updateTaskItem(task, dispatch);
       router.push('/');
     }
@@ -55,7 +55,7 @@ export default function EditTask() {
     <div className='flex-col justify-center border border-blue-300 rounded-lg bg-clear shadow-lg p-8 px-40 mt-5'>
       <div className="flex flex-col border rounded-lg border-blue-300 justify-center bg-clear shadow-lg py-5 px-5">
         <label className="block text-center text-2xl text-white font-bold">Edit Task</label>
-        <LabelWithInput label='Name' placeholder="Enter task name" type='text' value={task?.name || ''} onChange={handleNameChange} />
+        <LabelWithInput label='Name' placeholder="Enter task name" type='text' value={task?.title || ''} onChange={handleNameChange} />
         <LabelWithInput label='Description' type='textarea' placeholder="Enter task description" value={task?.description || ''} onChange={handleDescriptionChange} />
       </div>
       <button className="bg-clear border border-green-300 mt-10 w-full font-bold text-green-300 px-4 py-2 rounded" onClick={handleAddClick}>UPDATE</button>

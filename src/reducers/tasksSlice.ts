@@ -20,7 +20,7 @@ export const taskSlice = createSlice({
       const newTask: TaskItem = {
         ...action.payload,
         id: Date.now().toString(), // Fixed: Date.now() is a function
-        completed: false,
+        creationDate: new Date(),
       };
       state.tasks.push(newTask); // Safe mutation (Immer handles it)
     },

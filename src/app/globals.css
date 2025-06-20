@@ -1,4 +1,15 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Optional custom styles */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(10px);
+  transition: all 0.5s ease;
+}
 
 :root {
   --background: #ffffff;

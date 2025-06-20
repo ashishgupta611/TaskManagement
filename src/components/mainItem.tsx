@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import bgImage from '../resources/images/bg_home.png';
 
-const Main = ({href= '/', hrefName='HOME', children }: {href?:string, hrefName?:string,  children: ReactNode }) => {
+const Main = ({ href = '/', hrefName = 'HOME', children }: { href?: string, hrefName?: string, children: ReactNode }) => {
     return (
         <main className="flex justify-center bg-gray-600">
             <Image
@@ -20,8 +20,11 @@ const Main = ({href= '/', hrefName='HOME', children }: {href?:string, hrefName?:
                 </div>
                 {children}
             </div>
-            <div className='m-6 w-60'>
-                <Link href={href} className='bg-clear border border-green-300 font-bold text-green-300 rounded p-3'>{hrefName}</Link>
+            <div className="m-4 md:m-6 w-full sm:w-auto min-w-[150px]">
+                <Link href={href}
+                    className="bg-clear border border-green-300 font-bold text-green-300 rounded p-2 md:p-3 block text-center sm:inline-block w-full sm:w-auto hover:bg-green-300 hover:text-white transition-colors">
+                    {hrefName}
+                </Link>
             </div>
         </main>
     );

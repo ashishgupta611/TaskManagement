@@ -22,10 +22,12 @@
     "next": "15.3.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-phone-input-2": "^2.15.1",
     "react-redux": "^9.2.0",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^3.1.0",
-    "use-debounce": "^10.0.5"
+    "use-debounce": "^10.0.5",
+    "validate.js": "^0.13.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
