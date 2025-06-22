@@ -55,7 +55,7 @@ const Navbar = () => {
                 <li
                   key={item.path}
                   className="relative group"
-                  onMouseEnter={() => item.subItems && setActiveDropdown(item.name)}
+                  // onMouseEnter={() => item.subItems && setActiveDropdown(item.name)}
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
                   <Link
@@ -66,35 +66,7 @@ const Navbar = () => {
                       }`}
                   >
                     {item.name}
-                    {item.subItems && (
-                      <span className="ml-1 inline-block">▾</span>
-                    )}
                   </Link>
-
-                  {/* Dropdown menu */}
-                  {item.subItems && (
-                    <div
-                      className={`absolute left-0 mt-0 w-48 bg-white rounded-md shadow-lg py-1 z-50 transition-all duration-200 ${activeDropdown === item.name
-                        ? 'opacity-100 visible translate-y-0'
-                        : 'opacity-0 invisible -translate-y-2'
-                        }`}
-                      onMouseEnter={() => setActiveDropdown(item.name)}
-                      onMouseLeave={() => setActiveDropdown(null)}
-                    >
-                      {item.subItems.map((subItem) => (
-                        <Link
-                          key={subItem.path}
-                          href={subItem.path}
-                          className={`block px-4 py-2 text-sm ${pathname === subItem.path
-                            ? 'bg-blue-100 text-blue-800'
-                            : 'text-gray-700 hover:bg-gray-100'
-                            }`}
-                        >
-                          {subItem.name}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
                 </li>
               ))}
             </ul>
