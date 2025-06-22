@@ -3,14 +3,14 @@ export const navItems = [
   { name: "About", path: "/about" },
   { name: "ContactUs", path: "/contact-us" },
   { name: "Community", path: "/community" },
-  {
-    name: "Product",
-    path: "/product",
-    subItems: [
-      { name: "Create New Task", path: "/product/create-task" },
-      { name: "Profile", path: "/product/profile" },
-    ],
-  },
+  // {
+  //   name: "Product",
+  //   path: "/product",
+  //   subItems: [
+  //     { name: "Create New Task", path: "/product/create-task" },
+  //     { name: "Profile", path: "/product/profile" },
+  //   ],
+  // },
   { name: "News", path: "/news" },
   // { name: "Service", path: "/service" },
 ];
