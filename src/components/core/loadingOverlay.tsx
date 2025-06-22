@@ -1,6 +1,6 @@
 import React from 'react';
-import { useAppSelector } from '../hooks';
-import { RootState } from '../store';
+import { useAppSelector } from '@/src/hooks';
+import { RootState } from '@/src/store';
 
 const LoadingOverlay: React.FC = () => {
   const { isLoading, loadingText } = useAppSelector((state: RootState) => state.rootReducer.loading);

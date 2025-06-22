@@ -1,11 +1,11 @@
 import React from 'react';
-import { useAppDispatch } from '../hooks';
-import { deleteTaskItem } from '../services/taskService';
-import { TaskItem, TaskCardProps } from '../interfaces';
-import { statusColors, priorityColors } from '../helpers';
-import { formatDate, confirm } from '../utils';
+import { useAppDispatch } from '../../hooks';
+import { deleteTaskItem } from '../../services/taskService';
+import { TaskItem, TaskCardProps } from '../../interfaces';
+import { statusColors, priorityColors } from '../../helpers';
+import { formatDate, confirm } from '../../utils';
 import { useRouter } from 'next/navigation';
-import { BorderButton } from './borderButton';
+import { BorderButton } from '../core/borderButton';
 
 const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, onDeleteSuccess, onView }) => {
     const dispatch = useAppDispatch();

@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useAppSelector } from '@/src/hooks';
 import React from 'react';
 import '../../globals.css';
-import LabelWithInput from '@/src/components/labelWithInput';
+import LabelWithInput from '@/src/components/core/labelWithInput';
 import { TaskItem } from '@/src/interfaces';
 import { RootState } from '@/src/store';
 import { usePathname, useRouter } from 'next/navigation';

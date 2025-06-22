@@ -6,7 +6,7 @@ import { RootState } from '@/src/store';
 import { useAppSelector, useAppDispatch } from '@/src/hooks';
 import '../../globals.css';
 import { InputChangeHandler } from '@/src/types';
-import LabelWithInput from '@/src/components/labelWithInput';
+import LabelWithInput from '@/src/components/core/labelWithInput';
 import { updateTaskItem } from '@/src/services/taskService';
 import { usePathname } from 'next/navigation';
 import { TaskItem } from '@/src/interfaces';

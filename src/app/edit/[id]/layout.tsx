@@ -1,4 +1,4 @@
-import Main from '@/src/components/mainItem';
+import Main from '@/src/components/core/mainItem';
 
 export default function EditTaskLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
     return (

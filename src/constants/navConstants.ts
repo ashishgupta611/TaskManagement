@@ -11,7 +11,8 @@ export const navItems = [
       { name: "Profile", path: "/product/profile" },
     ],
   },
-  { name: "Service", path: "/service" },
+  { name: "News", path: "/news" },
+  // { name: "Service", path: "/service" },
 ];
 
 // Style options for auth buttons - choose one

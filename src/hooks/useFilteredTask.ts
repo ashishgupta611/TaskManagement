@@ -5,9 +5,9 @@ export const useFilteredTask = () => {
 
     switch (filter) {
         case 'completed':
-            return tasks.filter((task) => task.completed);
+            return tasks.filter((task) => task.endDate);
         case 'pending':
-            return tasks.filter((task) => !task.completed);
+            return tasks.filter((task) => !task.endDate);
         default:
             return tasks;
     }

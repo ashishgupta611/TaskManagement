@@ -6,7 +6,7 @@ import { useAppDispatch } from '@/src/hooks';
 import React from 'react';
 import '../globals.css';
 import { InputChangeHandler } from '@/src/types';
-import LabelWithInput from '@/src/components/labelWithInput';
+import LabelWithInput from '@/src/components/core/labelWithInput';
 import { addTaskItem } from '@/src/services/taskService';
 import { TaskItem } from '@/src/interfaces';
 
