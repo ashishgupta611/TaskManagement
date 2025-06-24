@@ -3,14 +3,14 @@ import { useAppDispatch } from '../hooks';
 import { deleteTaskItem } from '../services/taskService';
 import { TaskItem, TaskCardProps } from '../interfaces';
 import { statusColors, priorityColors } from '../helpers';
-import { formatDate, confirm } from '../utils';
+import { formatTimestamp, confirm } from '../utils';
 import { useRouter } from 'next/navigation';
 import { BorderButton } from './borderButton';
 
 const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, onDeleteSuccess, onView }) => {
     const dispatch = useAppDispatch();
     const router = useRouter();
-    const css = 'text-white group-hover:text-gray-600';
+    const css = 'text-center text-white group-hover:text-gray-600';
 
     const handleDelete = (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -56,25 +56,25 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, onDeleteSuccess, onVi
                     <BorderButton type='delete' onClick={handleDelete} />
                 </div>
             </div>
-            <div className="grid grid-cols-6 gap-4 text-sm text-gray-700 mt-4">
-                <div className={`${css} col-span-2`}>
-                    <span className={`font-bold ${css}`}>Assigned to:</span><br />
-                    {task.assignedTo}
+            <div className="grid grid-cols-6 gap-4 text-sm text-gray-700 mt-2">
+                <div className={`${css} col-span-2 text-left`}>
+                    <span className={`font-semibold text-white group-hover:text-gray-600`}>Assigned To:</span><br />
+                    <span className={`font-bold py-1 px-3 bg-blue-300 rounded-lg`}>{task.assignedTo || 'Unassigned'}</span>
                 </div>
                 <div className={`${css}`}>
-                    <span className={`font-bold ${css}`}>Start date:</span><br />
-                    {formatDate(task.startDate)}
+                    <span className={`font-bold ${css}`}>START TIME</span><br />
+                    {formatTimestamp(task.startDate) || '---'}
                 </div>
                 <div className={`${css}`}>
-                    <span className={`font-bold ${css}`}>End date:</span><br />
-                    {formatDate(task.endDate)}
+                    <span className={`font-bold ${css}`}>END TIME</span><br />
+                    {formatTimestamp(task.endDate) || '---'}
                 </div>
                 <div>
-                    <span className={`font-semibold text-white group-hover:text-gray-600`}>Status:</span><br />
+                    <span className={`font-semibold text-white group-hover:text-gray-600`}>STATUS</span><br />
                     <span className={`font-bold ${statusColors[task.status]} py-1 px-2 bg-gray-200 rounded-lg`}>{task.status.toUpperCase()}</span>
                 </div>
                 <div>
-                    <span className={`font-semibold text-white group-hover:text-gray-600`}>Priority:</span><br />
+                    <span className={`font-semibold text-white group-hover:text-gray-600`}>PRIORITY</span><br />
                     <span className={`font-bold ${priorityColors[task.priority]} py-1 px-2 bg-gray-200 rounded-lg`}>{task.priority.toUpperCase()}</span>
                 </div>
             </div>

@@ -1,3 +1,5 @@
+import { Priority, Status } from "../types";
+
 export interface BaseTask {
     id: string;
     title: string;
@@ -6,11 +8,11 @@ export interface BaseTask {
 
 export interface TaskItem extends BaseTask {
     assignedTo?: string;
-    status: 'Open' | 'In-Progress' | 'Under-review' | 'Done' | 'Rejected' | 'Cancelled';
-    priority: 'Low' | 'Medium' | 'High';
-    creationDate: Date;
-    startDate?: Date;
-    endDate?: Date;
+    status: Status;
+    priority: Priority;
+    creationDate: number;
+    startDate?: number;
+    endDate?: number;
 };
 
 export interface TaskCardProps {

@@ -6,6 +6,7 @@ import { removeTask, addTask, updateTask } from "../reducers/tasksSlice";
 import { API, API_ENDPOINTS } from "../constants/endpoints";
 import { startLoading, stopLoading } from '../reducers/loadingSlice';
 import { addMessage } from "../reducers/messageSlice";
+import Chance from 'chance';
 
 // export const fetchProducts = createAsyncThunk(
 // "products/fetchProducts",
@@ -23,7 +24,16 @@ import { addMessage } from "../reducers/messageSlice";
 //);
 
 export const addTaskItem = async (task: Omit<TaskItem, 'id'>, dispatch: AppDispatch): Promise<Boolean> => {
-  let success = false;
+  const newTask = {
+    ...task, 
+    id: Chance().string({length: 10, pool: '0123456789' }),
+    creationDate: Date.now(),
+  };
+  return await createNewTask(newTask, dispatch);
+};
+
+export const createNewTask = async (task: TaskItem, dispatch: AppDispatch): Promise<Boolean> => {
+let success = false;
   dispatch(startLoading({ loadingText: 'Adding ...' }));
   const options: APIServiceOptions<TaskItem> = { url:`${API.URL.BASE}${API_ENDPOINTS.TASK.ADD}`, method:"post", data:task};
   try {

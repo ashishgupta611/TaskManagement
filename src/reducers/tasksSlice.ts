@@ -16,11 +16,11 @@ export const taskSlice = createSlice({
     },
 
     // Add a new task
-    addTask: (state, action: PayloadAction<Omit<TaskItem, "id">>) => {
+    addTask: (state, action: PayloadAction<Omit<TaskItem, 'id' | 'creationDate' | 'endDate'>>) => {
       const newTask: TaskItem = {
         ...action.payload,
         id: Date.now().toString(), // Fixed: Date.now() is a function
-        creationDate: new Date(),
+        creationDate: Date.now(),
       };
       state.tasks.push(newTask); // Safe mutation (Immer handles it)
     },
