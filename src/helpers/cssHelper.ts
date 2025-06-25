@@ -4,12 +4,12 @@ export const getCSSAndText = (type?: BorderButtonType): {css: string, text: stri
     switch (type) {
         case 'edit':
             return {
-                css: 'text-sm font-semibold bg-clear shadow-md border border-orange-200 group-hover:border-orange-400 text-orange-200 group-hover:text-orange-400 py-2 px-5 rounded hover:bg-gray-400',
+                css: 'text-sm font-semibold shadow-md border border-orange-200 group-hover:border-orange-400 text-orange-400 group-hover:text-orange-400 py-2 px-5 rounded bg-white/40',
                 text: 'EDIT'
             };
         case 'delete':
             return {
-                css: 'text-sm bg-clear font-semibold shadow-md border border-red-400 text-red-400 group-hover:border-red-500 group-hover:text-red-400 py-2 px-5 rounded hover:bg-gray-400',
+                css: 'text-sm font-semibold shadow-md border border-red-400 text-red-400 group-hover:border-red-500 group-hover:text-red-400 py-2 px-5 rounded bg-white/40',
                 text: 'DELETE'
             };
         default:

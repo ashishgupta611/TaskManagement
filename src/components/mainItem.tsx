@@ -15,8 +15,8 @@ const Main = ({ href = '/', hrefName = 'HOME', children }: { href?: string, href
             />
             <div className='flex absolute flex-col'>
                 <div className="flex-col justify-center border border-red-300 rounded-lg bg-clear shadow-lg p-8 px-40 mt-5">
-                    <h1 className="text-4xl font-bold mb-2 text-red-300">Welcome to TaskManager</h1>
-                    <p className="text-lg text-center text-blue-300 justify-center">Your personal task management application.</p>
+                    <h1 className="text-4xl font-bold mb-2 text-red-300 text-center">Welcome to TaskManager</h1>
+                    <p className="text-lg text-center text-blue-300">Your personal task management application.</p>
                 </div>
                 {children}
             </div>

@@ -43,7 +43,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, onDeleteSuccess, onVi
     };
     return (
         <div onClick={handleCardClick}
-            className="flex flex-col p-3 max-w-5xl min-w-3xl rounded-lg shadow-md bg-white/50 border-1 border-gray-50 mb-4 hover:bg-gray-50 group">
+            className="flex flex-col p-3 max-w-4xl min-w-3xl rounded-lg shadow-md bg-white/50 border-1 border-gray-50 mb-4 hover:bg-gray-50 group">
             <div className="flex justify-between items-start">
                 <div className='max-w-3xl'>
                     <h2 className={`font-semibold text-lg ${css} truncate`}>{task.title}</h2>
