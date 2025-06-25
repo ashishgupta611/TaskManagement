@@ -56,7 +56,7 @@ const CreateTaskForm2 = () => {
   };
 
   return (
-    <div className="max-w-5xl min-w-3xl mx-auto p-6 mt-4 justify-center border border-blue-300 rounded-lg bg-clear shadow-lg">
+    <div className="max-w-5xl min-w-3xl mx-auto p-6 mt-4 justify-center border border-gray-600 rounded-lg bg-gradient-to-r from-blue-300/60 via-pink-200/20 via-red-300 to-blue-300/60 shadow-lg">
       <h1 className="text-center text-2xl font-bold mb-6 text-white">Create New Task</h1>
       
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -74,7 +74,7 @@ const CreateTaskForm2 = () => {
             placeholder="Task title"
           />
           {errors?.title && (
-            <p className="mt-1 text-sm text-red-600">{errors.title[0]}</p>
+            <p className="mt-1 text-sm font-semibold text-red-600">{errors.title[0]}</p>
           )}
         </div>
 
@@ -83,16 +83,18 @@ const CreateTaskForm2 = () => {
             Description *
           </label>
           <textarea
+
+          
             id="description"
             name="description"
             value={task.description}
             onChange={handleChange}
             rows={4}
-            className={`w-full px-3 py-2 border rounded-md ${errors?.description ? 'border-red-500' : 'text-white'}`}
+            className={`w-full px-3 py-2 border rounded-md text-white ${errors?.description ? 'border-red-500' : 'border-white'}`}
             placeholder="Task description"
           />
           {errors?.description && (
-            <p className="mt-1 text-sm text-red-600">{errors.description[0]}</p>
+            <p className="mt-1 text-sm font-semibold text-red-600">{errors.description[0]}</p>
           )}
         </div>
 
@@ -118,7 +120,6 @@ const CreateTaskForm2 = () => {
             Assign To (Email) *
           </label>
           <input
-            type="email"
             id="assignedTo"
             name="assignedTo"
             value={task.assignedTo}
@@ -127,7 +128,7 @@ const CreateTaskForm2 = () => {
             placeholder="user@example.com"
           />
           {errors?.assignedTo && (
-            <p className="mt-1 text-sm text-red-600">{errors.assignedTo[0]}</p>
+            <p className="mt-1 text-sm font-semibold text-red-600">{errors.assignedTo[0]}</p>
           )}
         </div>
 
@@ -135,7 +136,7 @@ const CreateTaskForm2 = () => {
           <button
             type="button"
             onClick={() => router.push('/')}
-            className="px-4 py-2 border text-white rounded-md text-gray-700 hover:bg-gray-50 font-semibold"
+            className="px-4 py-2 border text-white rounded-md text-gray-700 hover:bg-gray-50 font-semibold hover:text-gray-800"
             disabled={isSubmitting}
           >
             Cancel
