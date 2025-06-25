@@ -1,4 +1,3 @@
-//import { createAsyncThunk } from "@reduxjs/toolkit";
 import { APIServiceOptions, TaskItem } from "../interfaces";
 import { AppDispatch } from "../store";
 import { makeRequest } from ".";
@@ -7,21 +6,6 @@ import { API, API_ENDPOINTS } from "../constants/endpoints";
 import { startLoading, stopLoading } from '../reducers/loadingSlice';
 import { addMessage } from "../reducers/messageSlice";
 import Chance from 'chance';
-
-// export const fetchProducts = createAsyncThunk(
-// "products/fetchProducts",
-// async (_ { dispatch }) => {
-// dispatch(productsLoading());
-// const response = await axiosInstance-get ("products");
-// dispatch(produstsLoaded(response.data));
-// );
-
-// export const fetchProducts = createAsyncThunk("fetchTask",
-// async (_ { dispatch }) => {
-// dispatch(productsLoading());
-//const response = await axiosInstance-get ("products");
-//dispatch(produstsLoaded(response.data));
-//);
 
 export const addTaskItem = async (task: Omit<TaskItem, 'id'>, dispatch: AppDispatch): Promise<Boolean> => {
   const newTask = {
@@ -57,7 +41,7 @@ let success = false;
 export const updateTaskItem = async (task: TaskItem, dispatch: AppDispatch): Promise<Boolean> => {
   let success = false;
   dispatch(startLoading({ loadingText: 'Updating ...' }));
-  const options: APIServiceOptions<{name: string, description: string}> = { url:`${API.URL.BASE}${API_ENDPOINTS.TASK.ADD}/${task.id}`, method:"put", data:{name: task.title, description:task.description}};
+  const options: APIServiceOptions<{name: string, description: string}> = { url:`${API.URL.BASE}${API_ENDPOINTS.TASK.ADD}/${task.id}`, method:"put", data:task};
   try {
     const response = await makeRequest(options);
     if (response) {

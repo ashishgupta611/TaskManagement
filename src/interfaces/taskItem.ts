@@ -7,11 +7,11 @@ export interface BaseTask {
 };
 
 export interface TaskItem extends BaseTask {
-    assignedTo?: string;
+    assignedTo: string;
     status: Status;
     priority: Priority;
     creationDate: number;
-    startDate?: number;
+    // startDate?: number;
     endDate?: number;
 };
 

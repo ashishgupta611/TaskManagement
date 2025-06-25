@@ -1,9 +1,9 @@
-//Implement home page for TaskManager application
 'use client';
 
-import React, { lazy, Suspense, useState, useEffect } from 'react';
 import './globals.css';
-import { useAPI, useAppSelector, useNetworkAPI, useAppDispatch } from '../hooks';
+
+import React, { lazy, Suspense, useState, useEffect } from 'react';
+import { useAppSelector, useNetworkAPI, useAppDispatch } from '../hooks';
 import { TaskItem } from '../interfaces';
 import { API, API_ENDPOINTS } from '../constants/endpoints';
 import Main from '../components/mainItem';
@@ -37,9 +37,6 @@ export default function Home() {
       dispatch(loadTasks(items));
     }
   };
-
-  // const filteredTasks = useFilteredTask();
-  //const { data, loading, error } = useAPI<TaskItem[]>({ url, initialData: [] });
 
   const handleSearch = () => {
     const filtered = tasks.filter((item => item.title.toLowerCase().includes(searchQuery.toLowerCase()) || item.description.toLowerCase().includes(searchQuery.toLowerCase())));

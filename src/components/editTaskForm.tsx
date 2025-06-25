@@ -1,30 +1,47 @@
 // app/add-task/page.tsx
 'use client';
 
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { RootState } from '@/src/store';
+import { usePathname } from 'next/navigation';
+import { useAppSelector, useAppDispatch } from '@/src/hooks';
 import { useRouter } from 'next/navigation';
 import validate from 'validate.js';
 import { TaskItem as Task } from '../interfaces';
-import { addTaskItem } from '@/src/services/taskService';
+import { updateTaskItem } from '@/src/services/taskService';
 import { createTaskFromConstraints as  constraints} from '../constraints';
+import { hasValidDate } from '../utils';
 
-const CreateTaskForm2 = () => {
-  const dispatch = useDispatch();
+const EditTaskForm = () => {
+  const dispatch = useAppDispatch();
+  const { tasks } = useAppSelector((state: RootState) => state.rootReducer.tasks);
   const router = useRouter();
+  const pathname = usePathname();
   const [errors, setErrors] = useState<Record<string, string[]>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [task, setTask] = useState<Omit<Task, 'id'>>({
+  const [task, setTask] = useState<Task>({
+    id:'',
     title: '',
     description: '',
     priority: 'Medium',
     assignedTo: 'Unassigned',
     creationDate: -1,
     endDate: -1,
-    startDate: -1,
+    // startDate: -1,
     status: 'Open',
   });
+
+  useEffect(() => {
+      if (!!pathname) {
+        const taskID = pathname.split('/').filter(Boolean).pop();
+        const [taskItem] = tasks.filter((item) => item.id === taskID);
+  
+        if (taskItem) {
+          setTask(taskItem);
+        }
+      }
+    }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -34,32 +51,34 @@ const CreateTaskForm2 = () => {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const validationErrors = validate(task, constraints);
     setErrors(validationErrors || {});
 
     if (!validationErrors) {
       setIsSubmitting(true);
-      try {
-        await addTaskItem(task, dispatch);
-        router.push('/');
-      } 
-      catch (error) {
-        console.error('Error adding task:', error);
-      } 
-      finally {
-        setIsSubmitting(false);
+
+      if (task.status === 'Done') {
+        if (!hasValidDate(task.endDate)) {
+          task.endDate = Date.now();
+        }
       }
+      else {
+        task.endDate = -1;
+      }
+
+      await updateTaskItem(task, dispatch);
+      router.push('/');
     }
   };
 
   return (
     <div className="max-w-5xl min-w-3xl mx-auto p-6 mt-4 justify-center border border-gray-600 rounded-lg bg-gradient-to-r from-blue-300/60 via-pink-200/20 via-red-300 to-blue-300/60 shadow-lg">
-      <h1 className="text-center text-2xl font-bold mb-6 text-white">Create New Task</h1>
+      <h1 className="text-center text-2xl font-bold mb-6 text-white">Edit Task</h1>
       
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleUpdate} className="space-y-4">
         <div>
           <label htmlFor="title" className="block text-sm font-semibold text-white mb-1">
             Title *
@@ -96,6 +115,26 @@ const CreateTaskForm2 = () => {
           {errors?.description && (
             <p className="mt-1 text-sm font-semibold text-red-600">{errors.description[0]}</p>
           )}
+        </div>
+        
+        <div>
+          <label htmlFor="status" className="block text-sm font-semibold text-white mb-1">
+            Status
+          </label>
+          <select
+            id="status"
+            name="status"
+            value={task.status}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border text-white rounded-md"
+          >
+            <option value="Open">Open</option>
+            <option value="In-Progress">In-Progress</option>
+            <option value="Under-review">Under-review</option>
+            <option value="Done">Done</option>
+            <option value="Rejected">Rejected</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
         </div>
 
         <div>
@@ -139,14 +178,14 @@ const CreateTaskForm2 = () => {
             className="px-4 py-2 border text-white rounded-md text-gray-700 hover:bg-gray-50 font-semibold hover:text-gray-800"
             disabled={isSubmitting}
           >
-            Cancel
+            CANCEL
           </button>
           <button
             type="submit"
             className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-blue-400 font-semibold"
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Adding...' : 'Add Task'}
+            {isSubmitting ? 'Updating...' : 'UPDATE'}
           </button>
         </div>
       </form>
@@ -154,4 +193,4 @@ const CreateTaskForm2 = () => {
   );
 };
 
-export default CreateTaskForm2;
+export default EditTaskForm;

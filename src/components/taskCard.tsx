@@ -43,11 +43,11 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, onDeleteSuccess, onVi
     };
     return (
         <div onClick={handleCardClick}
-            className="flex flex-col p-3 rounded-lg shadow-md bg-white/50 border-1 border-gray-50 mb-4 hover:bg-gray-50 group">
+            className="flex flex-col p-3 max-w-5xl min-w-3xl rounded-lg shadow-md bg-white/50 border-1 border-gray-50 mb-4 hover:bg-gray-50 group">
             <div className="flex justify-between items-start">
-                <div>
+                <div className='max-w-3xl'>
                     <h2 className={`font-semibold text-lg ${css} truncate`}>{task.title}</h2>
-                    <p className={`${css} text-sm line-clamp-2 mt-1`}>
+                    <p className={`text-white group-hover:text-gray-600 text-sm line-clamp-2 mt-1`}>
                         {task.description}
                     </p>
                 </div>
@@ -63,11 +63,11 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, onDeleteSuccess, onVi
                 </div>
                 <div className={`${css}`}>
                     <span className={`font-bold ${css}`}>START TIME</span><br />
-                    {formatTimestamp(task.startDate) || '---'}
+                    {formatTimestamp(task.creationDate)}
                 </div>
                 <div className={`${css}`}>
                     <span className={`font-bold ${css}`}>END TIME</span><br />
-                    {formatTimestamp(task.endDate) || '---'}
+                    {formatTimestamp(task.endDate)}
                 </div>
                 <div>
                     <span className={`font-semibold text-white group-hover:text-gray-600`}>STATUS</span><br />
