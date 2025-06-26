@@ -22,7 +22,7 @@ const CreateTaskForm = () => {
     assignedTo: 'Unassigned',
     creationDate: -1,
     endDate: -1,
-    startDate: -1,
+    // startDate: -1,
     status: 'Open',
   });
 
